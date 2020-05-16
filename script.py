@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 matplotlib.use('Agg')
 
-xAxis = list(range(-20,20))
+xAxis = list(range(0,64))
 
 
 def parabola(xValues):
@@ -31,7 +31,8 @@ style = 'ro'
 
 plt.plot(sliceXAxis , sliceYAxis , style)
 
-plt.axis([-10, 10, 0, 100])
+plt.axis([ 0, 6.4, -1, 1])
+
 
 filename = 'graph.png'
 
