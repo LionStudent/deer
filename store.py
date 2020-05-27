@@ -1,7 +1,7 @@
+import mysql.connector
 import cloudinary
 
 import cloudinary.uploader
-import mysql.connector
 
  
 
@@ -60,7 +60,6 @@ def searchTextData(name):
     db.close()
 
     return retval
-
 def addImageData(imageFilename):
 
     cloudinary.config(
