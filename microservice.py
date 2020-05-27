@@ -7,8 +7,6 @@ from flask import jsonify
 import covid19
 
 import json
-
-
 import store
 
 
@@ -60,20 +58,39 @@ def receiveAllPosts():
     posts = store.searchTextData(name)
 
     return jsonify(posts)
-@app.route('/sendSinglePost', methods=['POST'])
+def addImageData(imageFilename):
 
-def sendSinglePost():
+    cloudinary.config(
 
-    response = {}
+        cloud_name="drwusoh6l",
 
-    if request.method == 'POST':
+        api_key="152287666817656",
 
-        options = json.loads(request.data)
+        api_secret="i2Mtj8mf--UUgG6lGmuq2O9MlFA"
 
-        filename = covid19.getImageFilename(options)
+        )
 
-        options['url'] = store.addImageData(filename)
+    uploadInfo = cloudinary.uploader.upload(imageFilename)
 
-        store.addTextData(options)
 
-    return jsonify(options)
+    return uploadInfo["url"]
+
+   
+
+def addTextData(data):
+
+    db, cursor = connect()
+
+
+    insert = 'INSERT INTO covid19 (name, isTotal, isRaw, metric, fromDate, toDate, url) VALUES (%s, %s, %s, %s, %s, %s, %s)'
+
+    values = (data['name'], data['isTotal'], data['isRaw'], data['metric'], data['from'], data['to'], data['url'])
+
+    cursor.execute(insert , values)
+
+   
+
+    db.commit()
+
+    db.close()
+  
